@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Contact — ZenMotion</title>
+<meta name="description" content="Contact ZenMotion support. We're happy to help with the course, your account, refunds, or anything else." />
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body data-page="contact">
+<main>
+
+  <div class="page-hero"><div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span><span>Contact</span></div>
+    <h1>Contact us</h1>
+    <p class="lead" style="max-width:60ch">Questions about the course, your access, or a refund? Send us a note and a real person will reply.</p>
+  </div></div>
+
+  <section>
+    <div class="container">
+      <div class="grid cols-2" style="align-items:start">
+
+        <!-- form -->
+        <div class="form-card">
+          <h2 style="margin-bottom:16px">Send a message</h2>
+          <form id="contactForm" novalidate>
+            <div class="field-row">
+              <div class="field"><label for="cname">Name</label><input id="cname" name="name" autocomplete="name" required /></div>
+              <div class="field"><label for="cemail">Email</label><input id="cemail" type="email" name="email" autocomplete="email" required /></div>
+            </div>
+            <div class="field"><label for="csubject">Subject</label>
+              <select id="csubject" name="subject"><option>Question about the course</option><option>Help accessing my course</option><option>Refund request</option><option>Order / shipping</option><option>Something else</option></select>
+            </div>
+            <div class="field"><label for="cmessage">Message</label><textarea id="cmessage" name="message" placeholder="How can we help?" required></textarea></div>
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Send message</button>
+            <p id="contactStatus" class="small" style="display:none;color:var(--success);margin-top:12px"></p>
+            <p class="small muted" style="margin-top:10px">By sending, you agree to our <a href="privacy-policy.html" style="color:var(--brand-700)">privacy policy</a>.</p>
+          </form>
+        </div>
+
+        <!-- info -->
+        <div>
+          <div class="card" style="margin-bottom:18px">
+            <h3 style="margin-bottom:10px">Reach us directly</h3>
+            <p class="mb-0 muted">Email: <a href="mailto:support@zenmotionpeace.com" style="color:var(--brand-700)">support@zenmotionpeace.com</a><br>Phone: +852 5587 1500<br>Hours: Mon–Fri, 9:00–18:00 (HKT)</p>
+          </div>
+          <div class="card" style="margin-bottom:18px">
+            <h3 style="margin-bottom:10px">Refunds</h3>
+            <p class="mb-0 muted">Covered by our 90-day money-back guarantee. Email us and we'll take care of it — see the <a href="refund-policy.html" style="color:var(--brand-700)">refund policy</a>.</p>
+          </div>
+          <div class="card">
+            <h3 style="margin-bottom:10px">Company</h3>
+            <p class="mb-0 muted">Grova Technology (HK) Limited<br>Room A5, 7/F, Astoria Building,<br>No. 34 Ashley Road, Tsim Sha Tsui, Hong Kong</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+{
+  "name": "zenmotion-backend",
+  "version": "1.0.0",
+  "description": "Backend API for the ZenMotion trust-led e-commerce site (Tai Chi course + physical goods). Server-authoritative pricing, Airwallex payments, auth, orders, contact.",
+  "type": "module",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=18.17"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "migrate": "node src/db/migrate.js",
+    "seed": "node src/db/seed.js"
+  },
+  "keywords": [
+    "zenmotion",
+    "ecommerce",
+    "airwallex",
+    "express",
+    "api"
+  ],
+  "author": "Grova Technology (HK) Limited",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^11.3.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "nanoid": "^5.0.7",
+    "nodemailer": "^6.9.14",
+    "zod": "^3.23.8"
+  }
+}

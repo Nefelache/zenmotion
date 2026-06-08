@@ -1,0 +1,47 @@
+# ==========================================================================
+# ZenMotion — full-site deployment (backend API + static frontend via nginx)
+#
+#   1) Provide backend secrets:  cp zenmotion_backed/.env.example zenmotion_backed/.env
+#      then edit (JWT secrets, Airwallex keys, SMTP, FRONTEND_BASE_URL).
+#   2) Build & run:              docker compose up -d --build
+#   3) Visit:                    http://<server-ip>:8080
+#
+# The frontend container reverse-proxies /api -> backend, so everything is
+# served from one origin.
+# ==========================================================================
+
+services:
+  backend:
+    build:
+      context: ./zenmotion_backed
+    image: zenmotion-backend:latest
+    container_name: zenmotion-backend
+    restart: unless-stopped
+    env_file:
+      - ./zenmotion_backed/.env
+    environment:
+      NODE_ENV: production
+      PORT: "4000"
+      DATABASE_FILE: data/zenmotion.db
+    volumes:
+      - backend_data:/app/data
+    expose:
+      - "4000"
+    # Uncomment to reach the API directly (bypassing nginx) for debugging:
+    # ports:
+    #   - "4000:4000"
+
+  frontend:
+    image: nginx:1.27-alpine
+    container_name: zenmotion-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"
+    volumes:
+      - ./zenmotion_front:/usr/share/nginx/html:ro
+      - ./deploy/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+
+volumes:
+  backend_data:

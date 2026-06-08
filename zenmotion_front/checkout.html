@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Checkout — ZenMotion</title>
+<meta name="description" content="Secure checkout. Billed as ZENMOTION. 90-day money-back guarantee." />
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body data-page="checkout">
+<main>
+
+  <div class="page-hero"><div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span><a href="cart.html">Cart</a><span class="sep">/</span><span>Checkout</span></div>
+    <h1>Secure checkout</h1>
+  </div></div>
+
+  <section>
+    <div class="container">
+      <div class="checkout-layout">
+
+        <!-- form column -->
+        <form id="checkoutForm" novalidate>
+          <div class="co-block">
+            <h2>Contact</h2>
+            <div class="field" id="emailField">
+              <label for="email">Email for your receipt &amp; access link</label>
+              <input type="email" id="email" name="email" inputmode="email" autocomplete="email" placeholder="you@example.com" />
+              <div class="err">Please enter a valid email address.</div>
+            </div>
+          </div>
+
+          <!-- shipping: shown only when cart has a physical item (toggled by app.js) -->
+          <div class="co-block" id="shippingSection" style="display:none">
+            <h2>Shipping address</h2>
+            <div class="field"><label for="fullname">Full name</label><input id="fullname" name="fullname" autocomplete="name" placeholder="Jane Doe" /></div>
+            <div class="field"><label for="addr1">Address</label><input id="addr1" name="addr1" autocomplete="address-line1" placeholder="Street address" /></div>
+            <div class="field-row">
+              <div class="field"><label for="city">City</label><input id="city" name="city" autocomplete="address-level2" /></div>
+              <div class="field"><label for="zip">ZIP / Postcode</label><input id="zip" name="zip" autocomplete="postal-code" /></div>
+            </div>
+            <div class="field"><label for="country">Country</label>
+              <select id="country" name="country" autocomplete="country-name"><option>United States</option><option>Canada</option><option>United Kingdom</option><option>Australia</option><option>Other</option></select>
+            </div>
+          </div>
+
+          <!-- payment -->
+          <div class="co-block" id="paySection">
+            <h2>Payment</h2>
+            <div class="pay-row">
+              <button type="button" class="pay-btn apple" data-pay="apple_pay"> Pay</button>
+              <button type="button" class="pay-btn" data-pay="paypal">PayPal</button>
+            </div>
+            <div class="divider">or pay by card</div>
+
+            <!-- The real card fields are rendered by your payment provider's secure
+                 element (Airwallex.js drop-in). This front end never touches card data. -->
+            <div class="field"><label>Card details</label>
+              <input id="cardMount" placeholder="•••• •••• •••• ••••  —  provider's secure card element mounts here" disabled />
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg">Pay securely</button>
+
+            <div class="secure-line"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg> Encrypted &amp; secure · billed as ZENMOTION · 90-day guarantee</div>
+
+            <div class="checkout-status" id="checkoutStatus">
+              <div class="spinner"></div>
+              <p class="muted" id="checkoutStatusText" style="margin:0">Connecting to secure checkout…</p>
+            </div>
+          </div>
+        </form>
+
+        <!-- summary column -->
+        <aside class="co-summary">
+          <div class="summary-card">
+            <h3 style="margin-bottom:14px">Order summary</h3>
+            <div id="checkoutSummary"><!-- injected by app.js --></div>
+          </div>
+          <div class="disclaimer" style="margin-top:16px">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3 4 6v6c0 5 3.5 7.5 8 9 4.5-1.5 8-4 8-9V6l-8-3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            <div>Your statement shows <b>ZENMOTION</b>. Covered by our <a href="refund-policy.html" style="color:#6c5318;text-decoration:underline">90-day money-back guarantee</a>.</div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+<script src="assets/app.js"></script>
+</body>
+</html>

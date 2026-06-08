@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Env / secrets
+.env
+.env.local
+.env.*.local
+
+# SQLite data
+zenmotion_backed/data/*.db
+zenmotion_backed/data/*.db-shm
+zenmotion_backed/data/*.db-wal
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db

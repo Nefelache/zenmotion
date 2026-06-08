@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sign in — ZenMotion</title>
+<meta name="description" content="Sign in to your ZenMotion account to access your course." />
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body data-page="account">
+<main>
+
+  <div class="page-hero"><div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span><span>Account</span></div>
+    <h1>Your account</h1>
+    <p class="lead" style="max-width:56ch">Sign in to watch your lessons, or create an account after purchase.</p>
+  </div></div>
+
+  <section>
+    <div class="container">
+      <div class="auth-wrap">
+        <div class="auth-tabs">
+          <button class="active" data-tab="login">Sign in</button>
+          <button data-tab="register">Create account</button>
+        </div>
+
+        <!-- The forms below are UI only. Your Cursor backend implements auth
+             (e.g. email + password, magic link, or a provider). -->
+
+        <!-- login -->
+        <div class="form-card" data-panel="login">
+          <form onsubmit="event.preventDefault();" novalidate>
+            <div class="field"><label for="li-email">Email</label><input id="li-email" type="email" autocomplete="email" placeholder="you@example.com" /></div>
+            <div class="field"><label for="li-pass">Password</label><input id="li-pass" type="password" autocomplete="current-password" placeholder="••••••••" /></div>
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Sign in</button>
+            <p class="small muted center" style="margin-top:12px"><a href="#" style="color:var(--brand-700)">Forgot your password?</a></p>
+            <p class="small muted center" style="margin-top:4px">Connect auth in the backend — this form is UI only.</p>
+          </form>
+        </div>
+
+        <!-- register -->
+        <div class="form-card" data-panel="register" style="display:none">
+          <form onsubmit="event.preventDefault();" novalidate>
+            <div class="field"><label for="re-name">Name</label><input id="re-name" autocomplete="name" /></div>
+            <div class="field"><label for="re-email">Email</label><input id="re-email" type="email" autocomplete="email" placeholder="you@example.com" /></div>
+            <div class="field"><label for="re-pass">Create a password</label><input id="re-pass" type="password" autocomplete="new-password" placeholder="••••••••" /></div>
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Create account</button>
+            <p class="small muted center" style="margin-top:12px">By creating an account you agree to our <a href="terms-of-service.html" style="color:var(--brand-700)">terms</a> and <a href="privacy-policy.html" style="color:var(--brand-700)">privacy policy</a>.</p>
+          </form>
+        </div>
+
+        <p class="center small muted" style="margin-top:20px">Don't have the course yet? <a href="course.html" style="color:var(--brand-700)">See the course →</a></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+<script src="assets/app.js"></script>
+</body>
+</html>

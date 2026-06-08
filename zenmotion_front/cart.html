@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Your Cart — ZenMotion</title>
+<meta name="description" content="Your ZenMotion cart." />
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body data-page="cart">
+<main>
+
+  <div class="page-hero"><div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span><span>Cart</span></div>
+    <h1>Your cart</h1>
+  </div></div>
+
+  <section>
+    <div class="container">
+
+      <!-- empty state -->
+      <div id="cartEmpty" class="cart-empty" style="display:none">
+        <svg width="56" height="56" viewBox="0 0 24 24" fill="none"><path d="M6 7h13l-1.2 9.2a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 7Z" stroke="currentColor" stroke-width="2"/><path d="M9 7a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="2"/></svg>
+        <h2 style="margin:.4rem 0">Your cart is empty</h2>
+        <p>Start with the free lesson, or browse the shop.</p>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px">
+          <a class="btn btn-primary" href="course.html">See the course</a>
+          <a class="btn btn-ghost" href="shop.html">Browse the shop</a>
+        </div>
+      </div>
+
+      <!-- cart layout -->
+      <div id="cartLayout" class="cart-layout">
+        <div class="cart-rows" id="cartRows"><!-- rows injected by app.js --></div>
+        <aside class="summary-card" id="cartSummary"><!-- summary injected by app.js --></aside>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+<script src="assets/app.js"></script>
+</body>
+</html>

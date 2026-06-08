@@ -1,0 +1,16 @@
+node_modules
+data
+*.db
+*.db-shm
+*.db-wal
+.env
+.env.*
+!.env.example
+*.log
+npm-debug.log*
+.DS_Store
+.git
+.gitignore
+Dockerfile
+.dockerignore
+README.md
