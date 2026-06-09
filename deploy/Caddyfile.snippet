@@ -1,22 +1,17 @@
 # ==========================================================================
-# Add this block to your existing Caddyfile (same file Caddy already uses for
-# osliceinspiration.com / the company website), then reload Caddy.
+# Append this block to your host Caddyfile:  /opt/agent-os/Caddyfile
+# (the file bind-mounted into agent-os-caddy-1 at /etc/caddy/Caddyfile)
 #
-# It serves the ZenMotion test on its own subdomain with automatic HTTPS.
-# Caddy reaches the container by name over the shared docker network, so the
-# ZenMotion containers must be attached to Caddy's network (see
-# docker-compose.prod.yml -> caddynet).
+# It matches the existing pattern in that file (company-website / agent-os)
+# and serves the ZenMotion test on its own subdomain with automatic HTTPS.
+# Caddy reaches the container by name over the shared "agent-os_default"
+# network, which the ZenMotion frontend joins (see docker-compose.prod.yml).
 # ==========================================================================
 
 zenmotion.osliceinspiration.com {
-    encode zstd gzip
-    reverse_proxy zenmotion-frontend:80
+  encode gzip
+  reverse_proxy zenmotion-frontend:80
 }
 
-# --- Reload Caddy after editing ---
-# If Caddy runs in docker (container: agent-os-caddy-1):
-#   docker exec -w /etc/caddy agent-os-caddy-1 caddy reload --config /etc/caddy/Caddyfile
-# (adjust the --config path to wherever your Caddyfile is mounted in the container)
-#
-# If your Caddy uses a JSON config instead of a Caddyfile, tell me and I'll
-# give you the JSON route object instead of this block.
+# --- After editing /opt/agent-os/Caddyfile, reload Caddy: ---
+#   docker exec agent-os-caddy-1 caddy reload --config /etc/caddy/Caddyfile
