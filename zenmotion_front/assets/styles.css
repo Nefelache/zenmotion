@@ -338,6 +338,61 @@ footer.site a:hover{opacity:1;text-decoration:underline}
   .gallery,.summary-card,.co-summary{position:static}
   .foot-grid{grid-template-columns:1fr 1fr}
 }
+/* ================================================================
+   IMAGERY — real photos layered into the media placeholders.
+   Elements keep their fallback gradient; an absolutely-positioned
+   <img class="media-img"> sits behind any play button / tag.
+   ================================================================ */
+.media-frame,.video-ph,.gallery .main,.product-card .thumb,.avatar{overflow:hidden;position:relative}
+.media-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:0}
+.media-frame .play,.media-frame .media-tag,.gallery .main .play,.gallery .main .media-tag,.video-ph .play,.video-ph .lbl{position:relative;z-index:2}
+.media-frame .media-tag,.video-ph .lbl,.gallery .main .media-tag{position:absolute}
+/* dark scrim so white play buttons / labels stay legible over photos */
+.video-ph::after,.gallery .main[data-free-lesson]::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,28,25,.18),rgba(16,28,25,.5));z-index:1}
+.avatar .media-img{z-index:1}
+/* product image hover zoom */
+.product-card .thumb .media-img{transition:transform .55s cubic-bezier(.2,.7,.2,1)}
+.product-card:hover .thumb .media-img{transform:scale(1.06)}
+.gallery .main .media-img{transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.gallery .main:hover .media-img{transform:scale(1.03)}
+.about-figure{margin:0 auto 34px;max-width:920px;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);aspect-ratio:16/7}
+.about-figure img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* ================================================================
+   MOTION — scroll reveal, hero entrance, header shadow, hovers.
+   All gated behind .zm-anim, which app.js adds ONLY when the user
+   has not requested reduced motion. Without it, everything is
+   visible and static (progressive enhancement / a11y safe).
+   ================================================================ */
+.zm-anim .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .75s cubic-bezier(.2,.7,.2,1);will-change:opacity,transform}
+.zm-anim .reveal.in{opacity:1;transform:none}
+
+@keyframes zmUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.zm-anim .hero .eyebrow,.zm-anim .hero h1,.zm-anim .hero .lead,.zm-anim .hero-cta,.zm-anim .hero .chips,.zm-anim .hero-media{opacity:0;animation:zmUp .8s cubic-bezier(.2,.7,.2,1) forwards}
+.zm-anim .hero .eyebrow{animation-delay:.05s}
+.zm-anim .hero h1{animation-delay:.14s}
+.zm-anim .hero .lead{animation-delay:.26s}
+.zm-anim .hero-cta{animation-delay:.38s}
+.zm-anim .hero .chips{animation-delay:.5s}
+.zm-anim .hero-media{animation:zmUp 1s cubic-bezier(.2,.7,.2,1) .3s forwards}
+
+/* slow ambient drift on the hero glow */
+.zm-anim .hero::before{animation:zmGlow 16s ease-in-out infinite alternate}
+@keyframes zmGlow{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(0,-14px,0) scale(1.05)}}
+
+header.site{transition:box-shadow .25s ease,background .25s ease}
+header.site.scrolled{box-shadow:0 6px 22px rgba(27,43,40,.10);background:rgba(250,247,241,.96)}
+
+.card,.step,.review,.media-card,.summary-card,.price-card{transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s ease}
+.zm-anim .card:hover,.zm-anim .step:hover,.zm-anim .review:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.btn-primary{transition:transform .08s ease,box-shadow .25s,background .2s,filter .2s}
+.zm-anim .btn-primary:hover{box-shadow:0 10px 26px rgba(36,107,90,.34)}
+
+@media (prefers-reduced-motion: reduce){
+  .zm-anim .reveal{opacity:1 !important;transform:none !important;transition:none}
+  .zm-anim .hero::before{animation:none}
+}
+
 @media (max-width:680px){
   body{font-size:17px}
   .nav-links{display:none}

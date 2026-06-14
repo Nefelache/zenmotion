@@ -26,14 +26,14 @@
      treat the SERVER copy as the source of truth at checkout. */
   var PRODUCTS = {
     course: { id:"course", name:"Tai Chi Beginner Video Course", short:"Course",
-      price:2900, type:"digital", url:"course.html",
+      price:2900, type:"digital", url:"course.html", img:"assets/img/lesson.jpg",
       blurb:"A beginner-friendly video course. 15 minutes a day of gentle, low-impact movement." },
     tshirt: { id:"tshirt", name:"ZenMotion Breathable Practice T-Shirt", short:"T-Shirt",
-      price:7900, type:"physical", url:"product-tshirt.html",
+      price:7900, type:"physical", url:"product-tshirt.html", img:"assets/img/tshirt.jpg",
       blurb:"Soft, breathable shirt designed for easy movement during practice.",
       options:{ Size:["S","M","L","XL","2XL"] } },
     mat: { id:"mat", name:"ZenMotion Joint-Support Anti-slip Mat", short:"Mat",
-      price:9900, type:"physical", url:"product-mat.html",
+      price:9900, type:"physical", url:"product-mat.html", img:"assets/img/mat.jpg",
       blurb:"Extra-cushioned, non-slip mat to support joints during floor and standing work." }
   };
 
@@ -177,10 +177,12 @@
   drawerRoot.querySelectorAll("[data-drawer-close]").forEach(function(b){ b.addEventListener("click", closeDrawer); });
   document.addEventListener("keydown", function(e){ if(e.key==="Escape" && drawerRoot.classList.contains("open")) closeDrawer(); });
 
+  function thumbStyle(p){ return p.img ? ' style="background-image:url(\''+p.img+'\');background-size:cover;background-position:center;color:transparent"' : ''; }
+
   function lineHTML(i){
     var p = PRODUCTS[i.id]; if(!p) return "";
     return '<div class="line">'
-      + '<div class="lthumb">'+p.short+'</div>'
+      + '<div class="lthumb"'+thumbStyle(p)+'>'+p.short+'</div>'
       + '<div class="lmid"><b>'+p.name+'</b>'
       +   (optLine(i.opts)?'<div class="opt-line">'+optLine(i.opts)+'</div>':'')
       +   '<div class="lqty"><button data-dec="'+i.key+'" aria-label="Decrease">−</button><span>'+i.qty+'</span><button data-inc="'+i.key+'" aria-label="Increase">+</button></div>'
@@ -224,7 +226,7 @@
     if(empty) empty.style.display="none"; if(layout) layout.style.display="grid";
     rows.innerHTML = items.map(function(i){
       var p = PRODUCTS[i.id];
-      return '<div class="crow"><div class="cthumb">'+p.short+'</div>'
+      return '<div class="crow"><div class="cthumb"'+thumbStyle(p)+'>'+p.short+'</div>'
         + '<div><h3>'+p.name+'</h3>'+(optLine(i.opts)?'<div class="small muted">'+optLine(i.opts)+'</div>':'')
         +   '<div class="qty" style="margin-top:10px"><button data-dec="'+i.key+'" aria-label="Decrease">−</button><input data-qtyfield="'+i.key+'" value="'+i.qty+'" inputmode="numeric" aria-label="Quantity"><button data-inc="'+i.key+'" aria-label="Increase">+</button></div>'
         +   ' <button class="lremove" data-remove="'+i.key+'" style="margin-left:10px">Remove</button>'
@@ -257,7 +259,7 @@
     if(shipping) shipping.style.display = cartHasPhysical() ? "block" : "none";
     sum.innerHTML = items.map(function(i){
       var p = PRODUCTS[i.id];
-      return '<div class="line"><div class="lthumb">'+p.short+'</div><div class="lmid"><b>'+p.name+'</b>'
+      return '<div class="line"><div class="lthumb"'+thumbStyle(p)+'>'+p.short+'</div><div class="lmid"><b>'+p.name+'</b>'
         + (optLine(i.opts)?'<div class="opt-line">'+optLine(i.opts)+'</div>':'')
         + '<div class="small muted">Qty '+i.qty+'</div></div><div class="lright"><span class="lprice">'+money(p.price*i.qty)+'</span></div></div>';
     }).join("")
@@ -339,6 +341,48 @@
     el.addEventListener("click", play);
     el.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); play(); } });
   });
+
+  /* =========================== MOTION ===============================
+     Progressive-enhancement animations. We only opt in when the user
+     has NOT requested reduced motion; otherwise the page stays static
+     and fully visible (the CSS keeps everything visible without .zm-anim). */
+  function setupMotion(){
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // header gains a soft shadow once the page is scrolled
+    var header = document.querySelector("header.site");
+    if(header){
+      var onScroll = function(){ header.classList.toggle("scrolled", window.scrollY > 8); };
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive:true });
+    }
+
+    if(reduce || !("IntersectionObserver" in window)) return;
+    document.documentElement.classList.add("zm-anim");
+
+    var selector = ".card,.step,.review,.product-card,.qa,.guarantee,.instructor,"
+      + ".media-card,.lesson,.price-card,.disclaimer,.spec-list,.includes li,"
+      + ".trust-strip .chip,.about-figure,section > .container > .center";
+    var els = [].slice.call(document.querySelectorAll(selector));
+
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { rootMargin:"0px 0px -8% 0px", threshold:0.08 });
+
+    els.forEach(function(el){
+      // skip anything already in the first viewport so it doesn't flash in
+      if(el.getBoundingClientRect().top < window.innerHeight * 0.9 && window.scrollY === 0){
+        // gentle stagger among siblings that share a parent
+        var sibs = [].slice.call(el.parentElement ? el.parentElement.children : []);
+        var idx = Math.max(0, sibs.indexOf(el));
+        el.style.transitionDelay = Math.min(idx, 5) * 70 + "ms";
+      }
+      el.classList.add("reveal");
+      io.observe(el);
+    });
+  }
 
   /* ===================== CHECKOUT INTEGRATION ========================
      >>> BACKEND INTEGRATION POINT — Airwallex / payment provider <<<
@@ -429,6 +473,7 @@
 
   /* ------------------------------ init ------------------------------- */
   renderAll();
+  setupMotion();
 
   // expose a tiny API for debugging / backend wiring
   window.ZenMotion = { PRODUCTS:PRODUCTS, addItem:addItem, loadCart:loadCart, money:money, CONFIG:CONFIG };
